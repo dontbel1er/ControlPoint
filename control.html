@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <button id = 'this_button'>Добавить число</button>
+
+
+
+ <table border="1" id="table69" >
+   <tr><td></td><td></td><td></td><td></td> <td></td><td></td></tr>
+   <tr><td></td><td></td><td></td><td></td> <td></td><td></td></tr>                                                                             
+   <tr><td></td><td></td><td></td><td></td> <td></td><td></td></tr>                                            
+   <tr><td></td><td></td><td></td><td></td> <td></td><td></td></tr>                                                                                       
+   <tr><td></td><td></td><td></td><td></td> <td></td><td></td></tr>                                            
+</table>
+
+
+<script>
+/* let arr = Array.from({length:30}, () => Math.floor(Math.random() * 100)); 
+
+старая версия кода, тоже справляется, но при использовании бывают повторяющиеся числа 
+
+*/
+
+let arr = [];  //массив из 30 чисел от 0 до 99, без повторений
+while (arr.length < 30) {
+    const num = Math.floor(Math.random() * 100);
+    if (!arr.includes(num)) {
+        arr.push(num);
+    }
+}
+
+ 
+arr.sort();
+
+
+
+let table = document.getElementById('table69')
+
+for (let i = 0; i < 30; i++) {
+let rowIndex = Math.floor (i/6);
+let cellIndex = i % 6;
+let cell = table.rows[rowIndex].cells[cellIndex];
+cell.textContent = arr[i];
+
+let cells = table.querySelectorAll('td') 
+cells.forEach(td => { 
+    if (+td.textContent >= 50)
+    {
+        td.bgColor = 'orange';
+    }
+   
+
+
+}); 
+};
+
+
+document.getElementById('this_button').addEventListener('click', function() {
+    
+    let newNum;
+    do {
+        newNum = Math.floor(Math.random() * 100);
+    } while (arr.includes(newNum));
+    
+    
+    arr.push(newNum);
+    arr.sort((a, b) => a - b);
+    
+    let cells = document.querySelectorAll('td');
+    
+   
+    for (let i = 0; i < arr.length; i++) {
+        // Если ячеек не хватает - добавляем новые
+        if (i >= cells.length) {
+            let rowIndex = Math.floor(i / 6);
+            let cellIndex = i % 6;
+            
+            // Если нужно, добавляем новую строку
+            if (rowIndex >= table.rows.length) {
+                let newRow = table.insertRow();
+            }
+            
+            // Добавляем новую ячейку
+            let cell = table.rows[rowIndex].insertCell();
+            cells = document.querySelectorAll('td'); // Обновляем коллекцию
+        }
+        
+        // Заполняем ячейку
+        let cell = cells[i];
+        if (!cell) continue;
+        cell.textContent = arr[i];
+        cell.bgColor = (arr[i] >= 50) ? 'orange' : '';
+    }
+});
+
+
+
+    
+
+
+
+
+</script> 
+</html>
